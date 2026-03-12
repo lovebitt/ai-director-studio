@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 粗粝细腻主义全局样式 */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-paper-white text-charcoal font-body;
+    background-image: url('/textures/paper.jpg');
+    background-blend-mode: overlay;
+    background-size: 300px;
+  }
+  
+  /* 粗粝边框效果 */
+  .rough-border {
+    @apply border-3 border-charcoal;
+    border-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      currentColor 10px,
+      currentColor 20px
+    ) 3;
+  }
+  
+  /* 细腻内部效果 */
+  .delicate-inner {
+    @apply bg-white/90 backdrop-blur-sm;
+    box-shadow: 
+      inset 0 1px 3px rgba(0,0,0,0.1),
+      inset 0 -1px 3px rgba(0,0,0,0.1);
+  }
+  
+  /* 胶片颗粒效果 */
+  .film-grain::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/textures/grain.png');
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+@layer components {
+  /* 按钮样式 */
+  .btn-primary {
+    @apply px-6 py-3 bg-rough-blue text-white font-medium rounded-lg 
+           transition-all duration-300 hover:bg-misty-purple 
+           hover:scale-105 active:scale-95 rough-border;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-transparent text-charcoal font-medium rounded-lg
+           border-2 border-charcoal transition-all duration-300
+           hover:bg-charcoal hover:text-white hover:scale-105;
+  }
+  
+  /* 卡片样式 */
+  .card-rough {
+    @apply bg-white rounded-xl p-6 shadow-lg relative overflow-hidden;
+    border: 3px solid transparent;
+    border-image: repeating-linear-gradient(
+      135deg,
+      #8DA9C4,
+      #8DA9C4 10px,
+      transparent 10px,
+      transparent 20px
+    ) 3;
+  }
+  
+  .card-delicate {
+    @apply bg-gradient-to-br from-white/95 to-paper-white/95 
+           rounded-2xl p-8 shadow-xl backdrop-blur-sm;
+    box-shadow: 
+      0 10px 30px rgba(0,0,0,0.08),
+      inset 0 1px 1px rgba(255,255,255,0.5);
+  }
+  
+  /* 标题样式 */
+  .title-rough {
+    @apply text-4xl md:text-5xl font-display font-bold text-charcoal;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+    letter-spacing: -0.5px;
+  }
+  
+  .title-delicate {
+    @apply text-3xl font-body font-semibold text-charcoal/90;
+    letter-spacing: 0.5px;
+  }
+  
+  /* 进度条样式 */
+  .progress-bar-rough {
+    @apply h-3 bg-gray-200 rounded-full overflow-hidden;
+    border: 1px solid #36454F;
+  }
+  
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, #8DA9C4, #B8A9C9);
+  }
+  
+  /* 智能体状态指示器 */
+  .status-indicator {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium;
+  }
+  
+  .status-working {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .status-completed {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .status-coordinating {
+    @apply bg-blue-100 text-blue-800;
+  }
+}
+
+/* 自定义动画 */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .card-rough,
+  .card-delicate {
+    @apply p-4;
+  }
+  
+  .title-rough {
+    @apply text-3xl;
+  }
+}
