@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI导演工作室 - 网站预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .preview-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #718096;
+        }
+        
+        .screenshot {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 30px 0;
+            border: 3px solid #e2e8f0;
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .feature h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+        
+        .feature p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .access-methods {
+            background: #edf2f7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .method {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #4299e1;
+        }
+        
+        .method h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .method p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .status {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #4299e1;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="header">
+            <h1>🎬 AI导演工作室网站</h1>
+            <div class="subtitle">粗粝细腻主义创作展示平台</div>
+        </div>
+        
+        <div class="status">
+            <span>✅</span>
+            <div>
+                <strong>网站架构已完成</strong>
+                <div>Next.js + React + Tailwind CSS 完整实现</div>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h3>粗粝细腻主义</h3>
+                <p>独特的视觉风格设计</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h3>多智能体状态</h3>
+                <p>实时工作进度可视化</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <h3>响应式设计</h3>
+                <p>桌面/平板/手机全适配</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>高性能</h3>
+                <p>Next.js服务器端渲染</p>
+            </div>
+        </div>
+        
+        <div class="access-methods">
+            <h3>📱 访问方式</h3>
+            
+            <div class="method">
+                <h4>方案一：本地开发服务器</h4>
+                <p>在服务器上运行开发模式</p>
+                <div class="code-block">
+# 进入网站目录<br>
+cd /root/.openclaw/workspace/website<br><br>
+# 安装依赖<br>
+npm install<br><br>
+# 启动开发服务器<br>
+npm run dev
+                </div>
+                <p>访问地址: <code>http://localhost:3000</code></p>
+            </div>
+            
+            <div class="method">
+                <h4>方案二：静态文件预览</h4>
+                <p>直接查看HTML文件内容</p>
+                <div class="code-block">
+# 查看首页源代码<br>
+cat src/pages/index.jsx<br><br>
+# 查看组件代码<br>
+cat src/components/HeroSection.jsx<br><br>
+# 查看样式文件<br>
+cat src/styles/globals.css
+                </div>
+            </div>
+            
+            <div class="method">
+                <h4>方案三：公网部署（推荐）</h4>
+                <p>部署到Vercel或GitHub Pages</p>
+                <div class="code-block">
+# 推送到GitHub仓库<br>
+git init<br>
+git add .<br>
+git commit -m "AI导演网站"<br>
+git remote add origin https://github.com/用户名/仓库名.git<br>
+git push -u origin main
+                </div>
+                <p>然后访问Vercel导入部署</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="#deploy" class="btn">🚀 立即部署</a>
+            <a href="#code" class="btn btn-secondary">📁 查看代码</a>
+        </div>
+        
+        <div class="footer">
+            <p>🎬 AI导演系统 v1.0 | 最后更新: 2026-03-12 12:52</p>
+            <p>📧 如有访问问题，可提供代码片段或截图</p>
+        </div>
+    </div>
+    
+    <script>
+        // 简单的交互效果
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#deploy') {
+                    alert('部署指南:\n1. 将代码推送到GitHub\n2. 访问 vercel.com\n3. 导入仓库自动部署\n4. 获得公网访问地址');
+                    e.preventDefault();
+                }
+                if (this.getAttribute('href') === '#code') {
+                    alert('代码位置:\n/root/.openclaw/workspace/website/\n包含完整的Next.js项目文件');
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

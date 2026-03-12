@@ -3,11 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['images.unsplash.com', 'cdn.dribbble.com'],
-  },
-  // 启用ES模块
-  experimental: {
-    esmExternals: true,
+    unoptimized: true, // Vercel需要这个配置
   },
 };
 
