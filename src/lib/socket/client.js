@@ -247,6 +247,8 @@ class SocketClient {
 // 创建单例实例
 let socketInstance = null;
 
+// 导出极简客户端
+export { getSimpleSocketClient } from "./simple-client";
 export function getSocketClient() {
   if (!socketInstance) {
     socketInstance = new SocketClient();

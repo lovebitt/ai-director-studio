@@ -5,6 +5,7 @@ import Footer from '../../components/Footer';
 import AgentChatWindow from '../../components/studio/AgentChatWindow';
 import TaskManager from '../../components/studio/TaskManager';
 import RealTimeMonitor from '../../components/studio/RealTimeMonitor';
+import ConnectionDiagnostic from '../../components/studio/ConnectionDiagnostic';
 import { getSocketClient } from '../../lib/socket/client';
 import { 
   Users, 
@@ -384,4 +385,6 @@ export default function StudioPage() {
       <Footer />
     </>
   );
+      {/* 连接诊断工具 */}
+      <ConnectionDiagnostic socketClient={socketClient} />
 }
