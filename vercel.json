@@ -1,0 +1,34 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_SOCKET_URL": "https://lovebitt-ai-director-studio-fv6g.vercel.app"
+    }
+  },
+  "functions": {
+    "api/socket/io.js": {
+      "maxDuration": 10
+    }
+  },
+  "regions": ["iad1"],
+  "public": true
+}
