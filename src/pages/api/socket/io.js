@@ -1,4 +1,4 @@
-import SocketHandler from '../../../../lib/socket/server';
+import SocketHandler from '../../../lib/socket/server';
 
 export default function handler(req, res) {
   if (req.method === 'GET' || req.method === 'POST') {

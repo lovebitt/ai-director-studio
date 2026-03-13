@@ -22,7 +22,6 @@ if [ $? -eq 0 ]; then
     echo "🚀 修复完成，现在可以："
     echo "1. 提交这些修复文件："
     echo "   - package.json (已更新engines字段)"
-    echo "   - vercel.json (Vercel配置)"
     echo "   - .npmrc (npm配置)"
     echo "   - fix-vercel-build.sh (修复脚本)"
     echo ""
