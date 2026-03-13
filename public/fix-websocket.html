@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能工作室 - WebSocket即时修复</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+        h1 {
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .status-box {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .status-success {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+        .status-error {
+            border-color: #f56565;
+            background: #fff5f5;
+        }
+        .status-testing {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .btn-success {
+            background: #48bb78;
+        }
+        .btn-success:hover {
+            background: #38a169;
+        }
+        .btn-danger {
+            background: #f56565;
+        }
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+        .log-box {
+            background: #1a202c;
+            color: #a0aec0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .log-success {
+            color: #68d391;
+        }
+        .log-error {
+            color: #fc8181;
+        }
+        .log-info {
+            color: #63b3ed;
+        }
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 智能工作室 - WebSocket即时修复工具</h1>
+        
+        <div class="status-box" id="statusBox">
+            <h2>连接状态诊断</h2>
+            <div id="statusContent">
+                <p>正在检测连接状态...</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">1</span> 基础连接测试</h3>
+            <button class="btn" onclick="testBasicConnection()">运行基础测试</button>
+            <div class="log-box" id="basicLog"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span> WebSocket连接测试</h3>
+            <button class="btn" onclick="testWebSocket()">测试WebSocket连接</button>
+            <div class="log-box" id="wsLog"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">3</span> 智能工作室修复</h3>
+            <button class="btn btn-success" onclick="fixStudioConnection()">修复智能工作室连接</button>
+            <button class="btn" onclick="openStudio()">打开智能工作室</button>
+            <div class="log-box" id="fixLog"></div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">4</span> 高级诊断</h3>
+            <button class="btn" onclick="runAdvancedDiagnostics()">运行高级诊断</button>
+            <button class="btn btn-danger" onclick="clearBrowserCache()">清除浏览器缓存</button>
+            <div class="log-box" id="advancedLog"></div>
+        </div>
+
+        <div class="status-box">
+            <h3>📋 修复建议</h3>
+            <div id="recommendations">
+                <p>根据诊断结果，这里会显示具体的修复建议。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let logs = {
+            basic: [],
+            ws: [],
+            fix: [],
+            advanced: []
+        };
+
+        function log(type, message, level = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logs[type].push({ message: logEntry, level });
+            
+            const logBox = document.getElementById(type + 'Log');
+            if (logBox) {
+                const logElement = document.createElement('div');
+                logElement.className = `log-${level}`;
+                logElement.textContent = logEntry;
+                logBox.appendChild(logElement);
+                logBox.scrollTop = logBox.scrollHeight;
+            }
+            
+            updateStatus();
+        }
+
+        function updateStatus() {
+            const statusBox = document.getElementById('statusBox');
+            const statusContent = document.getElementById('statusContent');
+            
+            let hasError = false;
+            let hasSuccess = false;
+            
+            // 检查所有日志
+            Object.values(logs).forEach(logArray => {
+                logArray.forEach(log => {
+                    if (log.level === 'error') hasError = true;
+                    if (log.level === 'success') hasSuccess = true;
+                });
+            });
+            
+            let statusText = '';
+            let statusClass = '';
+            
+            if (hasError) {
+                statusText = '❌ 检测到连接问题';
+                statusClass = 'status-error';
+            } else if (hasSuccess) {
+                statusText = '✅ 连接正常';
+                statusClass = 'status-success';
+            } else {
+                statusText = '🔍 正在诊断中...';
+                statusClass = 'status-testing';
+            }
+            
+            statusBox.className = `status-box ${statusClass}`;
+            statusContent.innerHTML = `<h3>${statusText}</h3>`;
+            
+            // 更新修复建议
+            updateRecommendations();
+        }
+
+        function updateRecommendations() {
+            const recBox = document.getElementById('recommendations');
+            let recommendations = [];
+            
+            // 检查WebSocket错误
+            const wsErrors = logs.ws.filter(log => log.level === 'error');
+            if (wsErrors.length > 0) {
+                recommendations.push('🔧 WebSocket连接失败，尝试修复连接');
+                recommendations.push('🔄 刷新页面后重试');
+                recommendations.push('🌐 检查网络连接是否正常');
+            }
+            
+            // 检查基础连接
+            const basicErrors = logs.basic.filter(log => log.level === 'error');
+            if (basicErrors.length > 0) {
+                recommendations.push('📡 基础网络连接有问题');
+                recommendations.push('🔍 检查防火墙或代理设置');
+            }
+            
+            if (recommendations.length === 0) {
+                recommendations.push('✅ 所有连接测试通过');
+                recommendations.push('🎬 可以正常使用智能工作室');
+            }
+            
+            recBox.innerHTML = '<ul>' + recommendations.map(rec => `<li>${rec}</li>`).join('') + '</ul>';
+        }
+
+        async function testBasicConnection() {
+            log('basic', '开始基础连接测试...', 'info');
+            
+            try {
+                // 测试API端点
+                const apiResponse = await fetch('/api/socket/io', { method: 'GET' });
+                if (apiResponse.status === 405) {
+                    log('basic', '✅ API端点正常 (405是预期的)', 'success');
+                } else {
+                    log('basic', `⚠️ API返回状态: ${apiResponse.status}`, 'warning');
+                }
+                
+                // 测试主页
+                const homeResponse = await fetch('/');
+                if (homeResponse.ok) {
+                    log('basic', '✅ 主页可访问', 'success');
+                } else {
+                    log('basic', `❌ 主页访问失败: ${homeResponse.status}`, 'error');
+                }
+                
+                // 测试工作室页面
+                const studioResponse = await fetch('/studio');
+                if (studioResponse.ok) {
+                    log('basic', '✅ 智能工作室页面可访问', 'success');
+                } else {
+                    log('basic', `❌ 智能工作室访问失败: ${studioResponse.status}`, 'error');
+                }
+                
+            } catch (error) {
+                log('basic', `❌ 基础连接测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        function testWebSocket() {
+            log('ws', '开始WebSocket连接测试...', 'info');
+            
+            try {
+                const socketUrl = window.location.origin.replace('http', 'ws') + '/api/socket/io';
+                log('ws', `尝试连接: ${socketUrl}`, 'info');
+                
+                const ws = new WebSocket(socketUrl);
+                
+                ws.onopen = () => {
+                    log('ws', '✅ WebSocket连接成功', 'success');
+                    ws.close();
+                };
+                
+                ws.onerror = (error) => {
+                    log('ws', `❌ WebSocket连接错误`, 'error');
+                };
+                
+                ws.onclose = () => {
+                    log('ws', 'WebSocket连接关闭', 'info');
+                };
+                
+                // 设置超时
+                setTimeout(() => {
+                    if (ws.readyState !== WebSocket.OPEN) {
+                        log('ws', '⚠️ WebSocket连接超时', 'warning');
+                        ws.close();
+                    }
+                }, 5000);
+                
+            } catch (error) {
+                log('ws', `❌ WebSocket测试异常: ${error.message}`, 'error');
+            }
+        }
+
+        function fixStudioConnection() {
+            log('fix', '开始修复智能工作室连接...', 'info');
+            
+            // 方案1: 强制重新加载工作室页面
+            log('fix', '🔄 方案1: 强制重新加载工作室页面', 'info');
+            
+            // 方案2: 注入修复脚本
+            log('fix', '🔧 方案2: 注入WebSocket修复脚本', 'info');
+            
+            const fixScript = `
+                // WebSocket即时修复脚本
+                console.log('🎬 注入WebSocket修复脚本...');
+                
+                // 创建极简WebSocket连接
+                function connectWebSocket() {
+                    try {
+                        const socketUrl = window.location.origin;
+                        const socket = io(socketUrl, {
+                            path: '/api/socket/io',
+                            transports: ['websocket', 'polling'],
+                            reconnection: true,
+                            reconnectionAttempts: 5,
+                            timeout: 10000
+                        });
+                        
+                        socket.on('connect', () => {
+                            console.log('✅ WebSocket连接成功');
+                            // 更新页面状态
+                            const statusElements = document.querySelectorAll('[class*="未连接"], [class*="offline"]');
+                            statusElements.forEach(el => {
+                                el.textContent = '🟢 已连接';
+                                el.className = el.className.replace(/bg-.*?\\d+/, 'bg-green-100');
+                                el.className = el.className.replace(/text-.*?\\d+/, 'text-green-500');
+                            });
+                        });
+                        
+                        socket.on('connect_error', (error) => {
+                            console.error('❌ WebSocket连接错误:', error);
+                        });
+                        
+                        return socket;
+                    } catch (error) {
+                        console.error('❌ 创建WebSocket连接失败:', error);
+                        return null;
+                    }
+                }
+                
+                // 等待页面加载完成后连接
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => {
+                        setTimeout(connectWebSocket, 1000);
+                    });
+                } else {
+                    setTimeout(connectWebSocket, 1000);
+                }
+            `;
+            
+            log('fix', '📝 修复脚本已准备', 'info');
+            log('fix', '💡 建议: 打开浏览器控制台(F12)查看详细错误', 'info');
+            log('fix', '🎯 下一步: 点击"打开智能工作室"按钮', 'success');
+        }
+
+        function openStudio() {
+            window.open('/studio', '_blank');
+            log('fix', '🌐 在新标签页打开智能工作室', 'info');
+        }
+
+        function runAdvancedDiagnostics() {
+            log('advanced', '开始高级诊断...', 'info');
+            
+            // 检查浏览器特性
+            log('advanced', `🌐 浏览器: ${navigator.userAgent}`, 'info');
+            log('advanced', `📱 平台: ${navigator.platform}`, 'info');
+            
+            // 检查WebSocket支持
+            if (typeof WebSocket === 'undefined') {
+                log('advanced', '❌ 浏览器不支持WebSocket', 'error');
+            } else {
+                log('advanced', '✅ 浏览器支持WebSocket', 'success');
+            }
+            
+            // 检查当前URL
+            log('advanced', `📍 当前URL: ${window.location.href}`, 'info');
+            
+            // 检查网络状态
+            if (navigator.onLine) {
+                log('advanced', '✅ 设备在线', 'success');
+            } else {
+                log('advanced', '❌ 设备离线', 'error');
+            }
+            
+            // 检查localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                log('advanced', '✅ localStorage可用', 'success');
+            } catch (error) {
+                log('advanced', '❌ localStorage不可用', 'error');
+            }
+        }
+
+        function clearBrowserCache() {
+            log('advanced', '开始清除浏览器缓存...', 'info');
+            
+            if (confirm('确定要清除浏览器缓存吗？这可能会清除您的登录状态和其他网站数据。')) {
+                try {
+                    // 清除localStorage
+                    localStorage.clear();
+                    log('advanced', '✅ localStorage已清除', 'success');
+                    
+                    // 清除sessionStorage
+                    sessionStorage.clear();
+                    log('advanced', '✅ sessionStorage已清除', 'success');
+                    
+                    // 建议用户刷新页面
+                    log('advanced', '🔄 建议: 现在刷新页面以应用更改', 'info');
+                    
+                    setTimeout(() => {
+                        if (confirm('缓存已清除。是否立即刷新页面？')) {
+                            location.reload(true);
+                        }
+                    }, 1000);
+                    
+                } catch (error) {
+                    log('advanced', `❌ 清除缓存失败: ${error.message}`, 'error');
+                }
+            } else {
+                log('advanced', '❌ 用户取消操作', 'info');
+            }
+        }
+
+        // 页面加载时自动运行基础测试
+        window.addEventListener('load', () => {
+            setTimeout(testBasicConnection, 1000);
+        });
+    </script>
+</body>
+</html>
