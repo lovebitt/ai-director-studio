@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能工作室 - 紧急修复指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+        
+        .status-alert {
+            background: rgba(245, 101, 101, 0.1);
+            border: 2px solid #f56565;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            animation: alert-pulse 3s infinite;
+        }
+        
+        @keyframes alert-pulse {
+            0%, 100% { border-color: #f56565; }
+            50% { border-color: #fc8181; }
+        }
+        
+        .status-alert h2 {
+            color: #fc8181;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .step-card {
+            background: rgba(45, 55, 72, 0.7);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #4a5568;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .step-content {
+            color: #cbd5e0;
+        }
+        
+        .code-block {
+            background: #1a202c;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #667eea;
+            overflow-x: auto;
+        }
+        
+        .code-block code {
+            color: #68d391;
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565, #e53e3e);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-item {
+            background: rgba(45, 55, 72, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #4a5568;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #a0aec0;
+        }
+        
+        .console-tip {
+            background: rgba(26, 32, 44, 0.9);
+            border: 2px solid #4a5568;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .console-tip h3 {
+            color: #68d391;
+            margin-bottom: 10px;
+        }
+        
+        .key-combo {
+            display: inline-block;
+            background: #2d3748;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 0 5px;
+            border: 1px solid #4a5568;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #4a5568;
+            color: #a0aec0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .step-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🎬</div>
+            <h1>智能工作室紧急修复指南</h1>
+            <p class="subtitle">解决"智能体对话离线，导演系统链接错误"问题</p>
+        </header>
+        
+        <div class="status-alert">
+            <h2>🚨 紧急状态: 检测到连接问题</h2>
+            <p>智能工作室页面可以访问，但WebSocket连接失败，导致智能体显示离线且无法对话。</p>
+            <p><strong>根本原因:</strong> Vercel可能部署了旧版本代码，WebSocket配置在生产环境有问题。</p>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <div class="step-title">打开智能工作室</div>
+            </div>
+            <div class="step-content">
+                <p>首先访问智能工作室页面：</p>
+                <a href="https://lovebitt-ai-director-studio-fv6g.vercel.app/studio" target="_blank" class="btn">
+                    🌐 打开智能工作室
+                </a>
+                <p>确认页面可以打开，但显示"未连接"状态。</p>
+            </div>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <div class="step-title">打开浏览器开发者工具</div>
+            </div>
+            <div class="step-content">
+                <p>按以下快捷键打开开发者工具：</p>
+                <div class="console-tip">
+                    <h3>📋 打开控制台的方法</h3>
+                    <p><strong>Windows/Linux:</strong> 按 <span class="key-combo">F12</span> 或 <span class="key-combo">Ctrl</span> + <span class="key-combo">Shift</span> + <span class="key-combo">I</span></p>
+                    <p><strong>Mac:</strong> 按 <span class="key-combo">Cmd</span> + <span class="key-combo">Option</span> + <span class="key-combo">I</span></p>
+                    <p><strong>所有系统:</strong> 右键点击页面 → 选择"检查" → 切换到"Console"标签</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <div class="step-title">运行紧急修复脚本</div>
+            </div>
+            <div class="step-content">
+                <p>在Console标签页中，复制并粘贴以下代码：</p>
+                <div class="code-block">
+                    <code id="fixScript">
+// 智能工作室紧急修复脚本
+(function() {
+    const script = document.createElement('script');
+    script.src = 'https://lovebitt-ai-director-studio-fv6g.vercel.app/emergency-fix.js';
+    script.onload = () => console.log('✅ 紧急修复脚本加载成功！');
+    script.onerror = () => console.error('❌ 脚本加载失败，请检查网络');
+    document.head.appendChild(script);
+})();
+                    </code>
+                </div>
+                <button class="btn btn-success" onclick="copyScript()">📋 复制修复脚本</button>
+                <p>粘贴后按 <span class="key-combo">Enter</span> 执行。</p>
+            </div>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <div class="step-title">验证修复效果</div>
+            </div>
+            <div class="step-content">
+                <p>脚本执行后，观察以下变化：</p>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔌</div>
+                        <div class="feature-title">连接状态</div>
+                        <p>"未连接" → "🟢 已连接"</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-title">智能体列表</div>
+                        <p>"0/0 在线" → "5/5 在线"</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-title">聊天功能</div>
+                        <p>可以发送和接收消息</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <div class="feature-title">任务管理</div>
+                        <p>可以创建和分配任务</p>
+                    </div>
+                </div>
+                
+                <p>在控制台中输入以下命令测试功能：</p>
+                <div class="code-block">
+                    <code>
+// 测试连接状态
+window.emergencyFix.status()
+
+// 重新连接WebSocket
+window.emergencyFix.reconnect()
+
+// 重新加载智能体
+window.emergencyFix.reloadAgents()
+                    </code>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <div class="step-title">备用方案</div>
+            </div>
+            <div class="step-content">
+                <p>如果上述方法不工作，尝试以下备用方案：</p>
+                
+                <h3 style="margin: 20px 0 10px 0; color: #a0aec0;">方案A: 清除浏览器缓存</h3>
+                <button class="btn btn-warning" onclick="showCacheClearGuide()">🧹 显示清除缓存指南</button>
+                
+                <h3 style="margin: 20px 0 10px 0; color: #a0aec0;">方案B: 使用修复工具页面</h3>
+                <a href="https://lovebitt-ai-director-studio-fv6g.vercel.app/fix-websocket.html" target="_blank" class="btn">
+                    🛠️ 打开WebSocket修复工具
+                </a>
+                
+                <h3 style="margin: 20px 0 10px 0; color: #a0aec0;">方案C: 强制刷新页面</h3>
+                <button class="btn" onclick="location.reload()">🔄 强制刷新当前页</button>
+                <p>按 <span class="key-combo">Ctrl</span> + <span class="key-combo">F5</span> (Windows) 或 <span class="key-combo">Cmd</span> + <span class="key-combo">Shift</span> + <span class="key-combo">R</span> (Mac)</p>
+            </div>
+        </div>
+        
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <div class="step-title">技术信息</div>
+            </div>
+            <div class="step-content">
+                <h3 style="margin-bottom: 15px; color: #a0aec0;">问题分析</h3>
+                <ul style="padding-left: 20px; margin-bottom: 20px;">
+                    <li><strong>Vercel部署问题:</strong> 可能部署了旧版本代码</li>
+                    <li><strong>WebSocket配置:</strong> 生产环境配置不正确</li>
+                    <li><strong>缓存问题:</strong> 浏览器或CDN缓存了旧版本</li>
+                    <li><strong>依赖加载:</strong> Socket.IO库可能未正确加载</li>
+                </ul>
+                
+                <h3 style="margin-bottom: 15px; color: #a0aec0;">修复原理</h3>
+                <p>紧急修复脚本会：</p>
+                <ol style="padding-left: 20px;">
+                    <li>动态加载Socket.IO库（如果需要）</li>
+                    <li>建立WebSocket连接到正确端点</li>
+                    <li>更新页面UI显示连接状态</li>
+                    <li>加载智能体数据并启用聊天功能</li>
+                    <li>提供手动控制函数供调试使用</li>
+                </ol>
+                
+                <h3 style="margin-bottom: 15px; color: #a0aec0;">长期解决方案</h3>
+                <p>已提交代码修复到GitHub，等待Vercel重新部署最新版本。</p>
+                <p><strong>最新提交:</strong> 1da3865 (包含所有修复)</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 40px 0;">
+            <h2 style="margin-bottom: 20px; color: #a0aec0;">需要更多帮助？</h2>
+            <p>如果问题仍然存在，请提供以下信息：</p>
+            <div class="code-block" style="text-align: left; margin: 20px auto; max-width: 600px;">
+                <code>
+1. 浏览器名称和版本
+2. 控制台错误截图
+3. 网络标签页的WebSocket连接状态
+4. 执行修复脚本后的控制台输出
+                </code>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🎬 AI导演系统 · 智能工作室紧急修复指南</p>
+            <p>© 2026 AI导演工作室 · 版本 1da3865</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #718096;">
+                本修复工具为临时解决方案，等待Vercel部署最新版本后即可移除。
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function copyScript() {
+            const script = document.getElementById('fixScript').textContent;
+            navigator.clipboard.writeText(script).then(() => {
+                alert('✅ 修复脚本已复制到剪贴板！\n\n现在请：\n1. 打开智能工作室页面\n2. 按F12打开控制台\n3. 粘贴脚本并回车执行');
+            }).catch(err => {
+                console.error('复制失败:', err);
+                alert('❌ 复制失败，请手动选择并复制代码');
+            });
+        }
+        
+        function showCacheClearGuide() {
+            const guide = `
+🧹 清除浏览器缓存指南：
+
+Chrome:
+1. 按 Ctrl+Shift+Delete (Windows) 或 Cmd+Shift+Delete (Mac)
+2. 选择"所有时间"
+3. 勾选"缓存的图片和文件"
+4. 点击"清除数据"
+
+Firefox:
+1. 按 Ctrl+Shift+Delete
+2. 选择"所有时间"
+3. 勾选"缓存"
+4. 点击"确定"
+
+Edge:
+1. 按 Ctrl+Shift+Delete
+2. 选择"所有时间"
+3. 勾选"缓存的图像和文件"
+4. 点击"立即清除"
+
+Safari:
+1. 菜单栏 → Safari → 偏好设置 → 高级
+2. 勾选"在菜单栏中显示开发菜单"
+3. 菜单栏 → 开发 → 清空缓存
+
+清除后请刷新页面重试。
+`;
+            alert(guide);
+        }
+        
+        // 自动检查当前页面状态
+        window.addEventListener('load', () => {
+            console.log('🎬 紧急修复指南已加载');
+            
+            // 检查是否在智能工作室页面
+            if (window.location.pathname.includes('/studio')) {
+                console.log('🔍 检测到在智能工作室页面，建议运行修复脚本');
+                
+                // 显示提示
+                const tip = document.createElement('div');
+                tip.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: linear-gradient(135deg, #667eea, #764ba2);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    max-width: 300px;
+                    animation: slideIn 0.5s ease-out;
+                `;
+                
+                tip.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 5px;">🎬 检测到连接问题</div>
+                    <div style="font-size: 0.9em; opacity: 0.9;">建议运行紧急修复脚本</div>
+                    <button onclick="runFixScript()" style="margin-top: 10px; padding: 8px 16px; background: white; color: #667eea; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        立即修复
+                    </button>
+                `;
+                
+                document.body.appendChild(tip);
+                
+                // 5秒后自动隐藏
+                setTimeout(() => {
+                    tip.style.opacity = '0';
+                    tip.style.transition = 'opacity 0.5s';
+                    setTimeout(() => tip.remove(), 500);
+                }, 5000);
+            }
+        });
+        
+        function runFixScript() {
+            const script = document.getElementById('fixScript').textContent;
+            try {
+                eval(script);
+                alert('✅ 修复脚本已执行！\n\n请查看控制台输出确认修复状态。');
+            } catch (error) {
+                alert('❌ 执行失败: ' + error.message + '\n\n请手动复制脚本到控制台执行。');
+            }
+        }
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
