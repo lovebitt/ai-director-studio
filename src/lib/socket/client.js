@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import { getSocketUrl, getSocketOptions } from '../../config/socket';
 
 class SocketClient {
   constructor() {
@@ -17,20 +18,24 @@ class SocketClient {
     }
 
     try {
-      // 创建Socket连接
-      this.socket = io({
-        path: '/api/socket',
-        transports: ['websocket', 'polling'],
-        reconnection: true,
+      // 获取WebSocket配置
+      const socketUrl = getSocketUrl();
+      const socketOptions = {
+        ...getSocketOptions(),
         reconnectionAttempts: this.maxReconnectAttempts,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 5000,
         timeout: 20000,
-      });
+      };
+      
+      console.log('Connecting to WebSocket:', socketUrl, socketOptions);
+      
+      // 创建Socket连接
+      this.socket = io(socketUrl, socketOptions);
 
       // 连接成功
       this.socket.on('connect', () => {
-        console.log('Socket connected:', this.socket.id);
+        console.log('✅ Socket connected:', this.socket.id);
         this.isConnected = true;
         this.reconnectAttempts = 0;
         this.emit('connection_established', { socketId: this.socket.id });
@@ -38,14 +43,14 @@ class SocketClient {
 
       // 连接错误
       this.socket.on('connect_error', (error) => {
-        console.error('Socket connection error:', error);
+        console.error('❌ Socket connection error:', error);
         this.isConnected = false;
         this.emit('connection_error', { error: error.message });
       });
 
       // 断开连接
       this.socket.on('disconnect', (reason) => {
-        console.log('Socket disconnected:', reason);
+        console.log('⚠️ Socket disconnected:', reason);
         this.isConnected = false;
         this.emit('connection_lost', { reason });
       });

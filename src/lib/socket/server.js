@@ -53,9 +53,21 @@ export default function SocketHandler(req, res) {
   }
 
   console.log('Starting Socket.IO server...');
+  // 初始化智能体状态  initializeAgentStates();
   
   const io = new Server(res.socket.server, {
-    path: '/api/socket',
+    path: '/api/socket/io',
+    cors: {
+      origin: process.env.NODE_ENV === 'production' 
+        ? ['https://lovebitt-ai-director-studio-fv6g.vercel.app', 'https://ai-director-studio.vercel.app']
+        : ['http://localhost:3000', 'http://localhost:3001'],
+      methods: ['GET', 'POST'],
+      credentials: true,
+    },
+    transports: ['websocket', 'polling'],
+    allowEIO3: true,
+    pingTimeout: 60000,
+    pingInterval: 25000,
     addTrailingSlash: false,
     cors: {
       origin: '*',
