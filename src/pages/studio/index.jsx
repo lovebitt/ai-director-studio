@@ -14,7 +14,7 @@ import {
   Zap,
   Bell,
   HelpCircle
-} from 'lucide-react';
+} from '../../components/SimpleIcons';
 
 export default function StudioPage() {
   const [socketClient, setSocketClient] = useState(null);

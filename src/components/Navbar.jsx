@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Palette, Sparkles } from 'lucide-react';
+import { Menu, X, Palette, Sparkles } from '../components/SimpleIcons';
 import Link from 'next/link';
 
 export default function Navbar() {

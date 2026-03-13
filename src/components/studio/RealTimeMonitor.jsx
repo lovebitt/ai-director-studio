@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Activity, Cpu, TrendingUp, AlertTriangle, RefreshCw, Zap } from 'lucide-react';
+import { Activity, Cpu, TrendingUp, AlertTriangle, RefreshCw, Zap } from '../../components/SimpleIcons';
 
 export default function RealTimeMonitor({ agents }) {
   const [systemMetrics, setSystemMetrics] = useState({

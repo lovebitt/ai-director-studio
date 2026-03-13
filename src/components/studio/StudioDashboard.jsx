@@ -9,7 +9,7 @@ import {
   MessageSquare,
   Zap,
   Target
-} from 'lucide-react';
+} from '../../components/SimpleIcons';
 
 export default function StudioDashboard({ socketClient }) {
   const [dashboardStats, setDashboardStats] = useState({

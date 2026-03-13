@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, Paperclip, Image as ImageIcon, FileText, Smile, Bot, User } from 'lucide-react';
+import { Send, Paperclip, Image as ImageIcon, FileText, Smile, Bot, User } from '../../components/SimpleIcons';
 
 export default function AgentChatWindow({ agentId, socketClient, onSendMessage }) {
   const [messages, setMessages] = useState([]);

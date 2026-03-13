@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, Play, Pause, Trash2, Plus, Filter } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, Play, Pause, Trash2, Plus, Filter } from '../../components/SimpleIcons';
 
 export default function TaskManager({ socketClient }) {
   const [tasks, setTasks] = useState([]);

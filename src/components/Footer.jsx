@@ -1,4 +1,4 @@
-import { Github, Twitter, Mail, Heart } from 'lucide-react';
+import { Github, Twitter, Mail, Heart } from '../components/SimpleIcons';
 import Link from 'next/link';
 
 export default function Footer() {
