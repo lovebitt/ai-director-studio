@@ -7,11 +7,11 @@ export default function Navbar() {
 
   const navItems = [
     { label: '首页', href: '/' },
+    { label: '智能工作室', href: '/studio' },
     { label: '作品集', href: '/portfolio' },
     { label: '智能体', href: '/agents' },
     { label: '创作工具', href: '/tools' },
     { label: '关于', href: '/about' },
-    { label: '博客', href: '/blog' },
   ];
 
   return (
