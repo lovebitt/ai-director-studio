@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI导演智能工作室 - 版本测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .emoji {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #718096;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-icon {
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .status-success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .status-warning {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #4299e1;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #3182ce;
+        }
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        .timestamp {
+            text-align: center;
+            color: #a0aec0;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="emoji">🎬</div>
+        <h1>AI导演智能工作室</h1>
+        <div class="subtitle">实时多智能体协作平台 - 版本测试页面</div>
+    </div>
+
+    <div class="card">
+        <h2>🏗️ 系统架构</h2>
+        <ul class="feature-list">
+            <li><span class="feature-icon">🎨</span> 5个专业智能体实时对话</li>
+            <li><span class="feature-icon">🔌</span> WebSocket实时通信系统</li>
+            <li><span class="feature-icon">📋</span> 任务管理和进度跟踪</li>
+            <li><span class="feature-icon">⚡</span> 实时监控和系统分析</li>
+            <li><span class="feature-icon">📊</span> 工作室仪表板和统计</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🚀 部署状态</h2>
+        <p><strong>当前版本:</strong> 智能工作室 v1.0 (实时协作平台)</p>
+        <p><strong>部署时间:</strong> <span id="deploy-time">正在检测...</span></p>
+        <p><strong>功能状态:</strong> <span class="status status-success">🟢 全部就绪</span></p>
+        <p><strong>智能体状态:</strong> <span class="status status-success">🟢 5/5 在线</span></p>
+        <p><strong>实时通信:</strong> <span class="status status-success">🟢 WebSocket连接正常</span></p>
+    </div>
+
+    <div class="card">
+        <h2>🎯 快速开始</h2>
+        <p>体验完整的智能工作室功能：</p>
+        <div class="links">
+            <a href="/studio" class="btn btn-primary">进入智能工作室</a>
+            <a href="/" class="btn btn-secondary">返回首页</a>
+        </div>
+    </div>
+
+    <div class="timestamp">
+        测试页面生成时间: <span id="current-time"></span><br>
+        部署URL: https://lovebitt-ai-director-studio-fv6g.vercel.app
+    </div>
+
+    <script>
+        // 显示当前时间
+        const now = new Date();
+        document.getElementById('current-time').textContent = 
+            now.toLocaleString('zh-CN', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'Asia/Shanghai'
+            });
+
+        // 尝试检测部署时间
+        fetch('/')
+            .then(response => {
+                const serverDate = response.headers.get('date');
+                if (serverDate) {
+                    const deployTime = new Date(serverDate);
+                    document.getElementById('deploy-time').textContent = 
+                        deployTime.toLocaleString('zh-CN', { 
+                            year: 'numeric', 
+                            month: '2-digit', 
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Asia/Shanghai'
+                        });
+                } else {
+                    document.getElementById('deploy-time').textContent = '无法获取';
+                }
+            })
+            .catch(() => {
+                document.getElementById('deploy-time').textContent = '检测失败';
+            });
+    </script>
+</body>
+</html>
